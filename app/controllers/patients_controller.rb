@@ -1,31 +1,69 @@
+#require 'patient_decorator'
+
 class PatientsController < ApplicationController
   before_action :set_patient, only: [:show, :edit, :update, :destroy]
 
   # GET /patients
   # GET /patients.json
   def index
-    @patients = Patient.all
-  end
+   @patients = Patient.all
+    respond_to do |format|
+    format.html
+    format.json
+   
+   if params[:search]
+    #select all the patients which match the search pattern
+    @patients = Patient.search(params[:search])
+    #order the selected rows(if any) ascending by created_at field/column
+    @patients = @patients.order("created_at ASC")
+    else
+    #order all the rows descending by created_at field/column
+    @patients = @patients.order("created_at DESC")
+    end
+   end
+ end
 
   # GET /patients/1
   # GET /patients/1.json
   def show
+   @patient = Patient.find(params[:id])
   end
 
   # GET /patients/new
   def new
-    @patient = Patient.new
+    @patient = Patient.new(params[:patient])
   end
 
   # GET /patients/1/edit
   def edit
+   @patient = Patient.find(params[:id])
   end
 
   # POST /patients
   # POST /patients.json
-  def create
-    @patient = Patient.new(patient_params)
+ def create
+  @patient = Patient.new(patient_params)
+     #@patient.firstname = params[:patient][:firstname]
+     #@patient.lastname = params[:patient][:lastname]
+     #@patient.DOB = params[:patient][:DOB]
+     #@patient.address = params[:patient][:address]
+     #@patient.phone = params[:patient][:phone]
+     #@patient.infection = params[:patient][:infection]
 
+   #create an instance of the patient
+   #mypatient = Patient.new(@infection, @firstname)
+   #add the extra features to the new car
+  #if params[:patient][:headache].to_s.length > 0 then mypatient = HeadDecorator.new(mypatient) 
+
+  #if params[:patient][:fever].to_s.length > 0 then mypatient = BodyDecorator.new(mypatient)
+  #end
+
+  #if params[:patient][:cramp].to_s.length > 0 then mypatient = AbdominalDecorator.new(mypatient)
+ # end
+
+ #populate the cost and the description details
+   # @patient.infection = mypatient.infection
+    #@patient.description = mypatient.details
     respond_to do |format|
       if @patient.save
         format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
@@ -72,3 +110,4 @@ class PatientsController < ApplicationController
       params.require(:patient).permit(:firstname, :lastname, :DOB, :address, :phone, :infection)
     end
 end
+
