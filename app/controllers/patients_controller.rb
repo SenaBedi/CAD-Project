@@ -1,5 +1,4 @@
 #require 'patient_decorator'
-
 class PatientsController < ApplicationController
   before_action :set_patient, only: [:show, :edit, :update, :destroy]
 
@@ -43,7 +42,7 @@ class PatientsController < ApplicationController
   # POST /patients.json
  def create
   @patient = Patient.new(patient_params)
-     #@patient.firstname = params[:patient][:firstname]
+    # @patient.firstname = params[:patient][:firstname]
      #@patient.lastname = params[:patient][:lastname]
      #@patient.DOB = params[:patient][:DOB]
      #@patient.address = params[:patient][:address]
@@ -51,19 +50,20 @@ class PatientsController < ApplicationController
      #@patient.infection = params[:patient][:infection]
 
    #create an instance of the patient
-   #mypatient = Patient.new(@infection, @firstname)
+  # mypatient = Patient.new(@Patient.infection, @Patient.firstname)
    #add the extra features to the new car
   #if params[:patient][:headache].to_s.length > 0 then mypatient = HeadDecorator.new(mypatient) 
+  #end
 
   #if params[:patient][:fever].to_s.length > 0 then mypatient = BodyDecorator.new(mypatient)
   #end
 
   #if params[:patient][:cramp].to_s.length > 0 then mypatient = AbdominalDecorator.new(mypatient)
- # end
+  #end
 
  #populate the cost and the description details
-   # @patient.infection = mypatient.infection
-    #@patient.description = mypatient.details
+   #@patient.infection = mypatient.infection
+   #@patient.description = mypatient.details
     respond_to do |format|
       if @patient.save
         format.html { redirect_to @patient, notice: 'Patient was successfully created.' }

@@ -53,3 +53,5 @@ group :production do
   gem 'pg'
   gem 'rails_12factor'
 end
+
+gem 'mini_portile2', '~> 2.1'
