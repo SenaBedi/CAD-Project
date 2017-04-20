@@ -7,8 +7,7 @@ class CreatePatients < ActiveRecord::Migration
       t.string :address
       t.string :phone
       t.string :infection
-
-      t.timestamps null: false
+      t.timestamps
     end
   end
 end
